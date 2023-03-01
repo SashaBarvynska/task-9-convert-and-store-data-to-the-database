@@ -1,0 +1,36 @@
+parameters:
+  - in: path
+    name: driver_code
+    type: string
+    required: true
+  - name: format
+    in: query
+    type: string
+    enum: ['json', 'xml']
+    default: 'json'
+responses:
+  200:
+    description: Driver in format json
+    schema:
+      $ref: "#/definitions/Drivers"
+  404:
+    description: "No such driver"
+    schema:
+      $ref: "#/definitions/error"
+definitions:
+  Drivers:
+    type: object
+    additionalProperties: 
+      type: array
+    example:
+      abbreviation: VBM
+      car: MERCEDES
+      driver: Valtteri Bottas
+      speed: 1:12.434
+  error:
+    type: object
+    additionalProperties: 
+      type: array
+    example:
+      message: No such driver,
+      status: 404
