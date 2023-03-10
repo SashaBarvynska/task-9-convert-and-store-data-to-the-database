@@ -2,24 +2,22 @@ from typing import Any
 
 from flask import jsonify, make_response, wrappers
 from simplexml import dumps
-from task_Barvynska import Driver, Drivers, Files, FormatFile
+from task_Barvynska import Driver, Drivers
 
-from config import Config
+from src.models import DB_drivers
 
 
-def get_drivers() -> list[Driver]:
-    file_start, file_end, abbreviations_file = Files.find_files(Config.FOLDER_FILES)
-    list_drivers = Drivers.build_report(
-        FormatFile.format_file_abbreviation_data(Files.open_files(abbreviations_file)),
-        FormatFile.format_file_time(Files.open_files(file_start)),
-        FormatFile.format_file_time(Files.open_files(file_end)),
-        )
+def get_drivers_from_db() -> list[Driver]:
+    query = DB_drivers.select()
+    list_drivers = []
+    for i in query:
+        list_drivers.append(Driver(i.abbreviation, i.driver, i.car, i.start_time, i.end_time, i.speed))
     return list_drivers
 
 
 class DriverAdaptor:
     def __init__(self):
-        self.list_drivers = get_drivers()
+        self.list_drivers = get_drivers_from_db()
 
     def sort_data(self, order: bool) -> list[Driver]:
         return Drivers.sort_data(self.list_drivers, order)
