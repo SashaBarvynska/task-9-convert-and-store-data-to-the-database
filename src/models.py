@@ -17,6 +17,3 @@ class DB_drivers(BaseModel):
     start_time = CharField()
     end_time = CharField()
     speed = CharField()
-
-
-DB_drivers.create_table()

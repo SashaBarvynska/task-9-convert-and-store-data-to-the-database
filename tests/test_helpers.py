@@ -29,10 +29,10 @@ def json_format(drivers_list: list[Driver], columns: int = 6) -> bytes:
             [
                 {"abbreviation": x.abbreviation, "driver": x.driver} for x in drivers_list
                 ]
-            ).replace(": ", ":").replace(", ", ",")
+            )
     else:
-        result = json.dumps([x.__dict__ for x in drivers_list]).replace(": ", ":").replace(", ", ",")
-    return f'{result}\n'.encode()
+        result = json.dumps([x.__dict__ for x in drivers_list])
+    return f'{result}'.encode()
 
 
 def xml_format(drivers_list: list[Driver], columns: int = 6) -> bytes:

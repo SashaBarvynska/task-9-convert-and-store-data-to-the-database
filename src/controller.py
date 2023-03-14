@@ -1,10 +1,22 @@
+import json
 from typing import Any
 
-from flask import jsonify, make_response, wrappers
+from flask import make_response, wrappers
 from simplexml import dumps
-from task_Barvynska import Driver, Drivers
+from task_Barvynska import Driver, Drivers, Files, FormatFile
 
+from config import Config
 from src.models import DB_drivers
+
+
+def get_drivers_from_files() -> list[dict[str, str]]:
+    file_start, file_end, abbreviations_file = Files.find_files(Config.FOLDER_FILES)
+    list_drivers = Drivers.build_report(
+        FormatFile.format_file_abbreviation_data(Files.open_files(abbreviations_file)),
+        FormatFile.format_file_time(Files.open_files(file_start)),
+        FormatFile.format_file_time(Files.open_files(file_end)),
+        )
+    return [x.__dict__ for x in list_drivers]
 
 
 def get_drivers_from_db() -> list[Driver]:
@@ -36,6 +48,6 @@ def make_xml_response(list_drivers: list[dict[str, Any]], code: int) -> wrappers
 
 
 def make_json_response(list_drivers: list[dict[str, str]], code: int) -> wrappers.Response:
-    response = make_response(jsonify(list_drivers), code)
+    response = make_response(json.dumps(list_drivers), code)
     response.mimetype = 'application/json'
     return response

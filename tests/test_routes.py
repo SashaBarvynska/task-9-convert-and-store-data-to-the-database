@@ -17,7 +17,7 @@ drivers_list_2 = create_driver(1)
 driver = drivers_list_2[0]
 
 
-@patch("src.controller.get_drivers", return_value=drivers_list_1)
+@patch("src.controller.get_drivers_from_db", return_value=drivers_list_1)
 @pytest.mark.parametrize("order, format, result", [
     (
         "desc", "json", json_format(sorted_list_drivers_asc)
@@ -32,13 +32,13 @@ driver = drivers_list_2[0]
         "asc", "xml", xml_format(sorted_list_drivers_desc)
     )
     ])
-def test_show_report(mock_get_drivers, order, format, result, client):
+def test_show_report(mock_get_drivers_from_db, order, format, result, client):
     response: Response = client.get(f"/report?order={order}&format={format}")
     assert response.status_code == 200
-    assert response.data == result
+    assert result == response.data
 
 
-@patch("src.controller.get_drivers", return_value=drivers_list_1)
+@patch("src.controller.get_drivers_from_db", return_value=drivers_list_1)
 @pytest.mark.parametrize("order, format, result", [
     (
         "desc", "json", json_format(sorted_list_drivers_asc, 2)
@@ -59,10 +59,10 @@ def test_show_drivers(mock_get_drivers, order, format, result, client):
     assert response.data == result
 
 
-@patch("src.controller.get_drivers", return_value=drivers_list_2)
+@patch("src.controller.get_drivers_from_db", return_value=drivers_list_2)
 @pytest.mark.parametrize("format, result", [
     (
-        "json", f'{json.dumps(driver.__dict__).replace(": ", ":").replace(", ", ",")}\n'.encode()
+        "json", f'{json.dumps(driver.__dict__)}'.encode()
     ),
     (
         "xml", f'{dumps({"response": driver.__dict__})}'.encode()
@@ -74,16 +74,16 @@ def test_get_info(mock_get_drivers, format, result, client):
     assert response.data == result
 
 
-@patch("src.controller.get_drivers", return_value=drivers_list_2)
+@patch("src.controller.get_drivers_from_db", return_value=drivers_list_2)
 @patch("src.routes.DriverAdaptor.get_driver", return_value=None)
 def test_get_info_error(mock_get_driver, mock_get_drivers, client):
     response: Response = client.get("/report/drivers/DRghfgR?format=json")
     assert response.status_code == 404
-    assert response.data == b'{"message":"No such driver"}\n'
+    assert response.data == b'{"message": "No such driver"}'
     mock_get_driver.assert_called_with("abbreviation", "DRghfgR")
 
 
 def test_wrong_routes(client):
     response: Response = client.get("/report/&^%SashaBarvynska474")
     assert response.status_code == 404
-    assert response.data == b'{"message":"Page Not Found"}\n'
+    assert response.data == b'{"message": "Page Not Found"}'
