@@ -1,7 +1,7 @@
 from unittest.mock import patch
 
 import pytest
-from src.models import DB_drivers
+
 from config import Config
 from src.controller import (DriverAdaptor, get_drivers_from_db,
                             get_drivers_from_files)
@@ -85,7 +85,7 @@ def test_sort_data(mock_get_drivers_from_db, order, result):
     mock_get_drivers_from_db.assert_called_once()
 
 
-@patch("src.models.DB_drivers.select", return_value=drivers_list_3)
-def test_get_drivers_from_db(mock_DB_drivers):
+@patch("src.models.DataBaseDrivers.select", return_value=drivers_list_3)
+def test_get_drivers_from_db(mock_DataBaseDrivers):
     assert get_drivers_from_db() == drivers_list_3
-    mock_DB_drivers.assert_called_once()
+    mock_DataBaseDrivers.assert_called_once()

@@ -1,3 +1,4 @@
+
 from peewee import CharField, Model
 
 from src.db_connect import db
@@ -10,7 +11,7 @@ class BaseModel(Model):
         database = db
 
 
-class DB_drivers(BaseModel):
+class DataBaseDrivers(BaseModel):
     abbreviation = CharField()
     driver = CharField()
     car = CharField()

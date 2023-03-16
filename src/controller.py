@@ -6,7 +6,7 @@ from simplexml import dumps
 from task_Barvynska import Driver, Drivers, Files, FormatFile
 
 from config import Config
-from src.models import DB_drivers
+from src.models import DataBaseDrivers
 
 
 def get_drivers_from_files() -> list[dict[str, str]]:
@@ -20,7 +20,7 @@ def get_drivers_from_files() -> list[dict[str, str]]:
 
 
 def get_drivers_from_db() -> list[Driver]:
-    query = DB_drivers.select()
+    query = DataBaseDrivers.select()
     list_drivers = []
     for i in query:
         list_drivers.append(Driver(i.abbreviation, i.driver, i.car, i.start_time, i.end_time, i.speed))
