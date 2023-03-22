@@ -3,9 +3,9 @@ from unittest.mock import patch
 import pytest
 
 from config import Config
-from src.controller import (DriverAdaptor, get_drivers_from_db,
+from src.controller import (DriverAdaptor, create_driver, get_drivers_from_db,
                             get_drivers_from_files)
-from tests.test_helpers import create_driver
+from tests.conftest import drivers_list_6
 
 drivers_list_3 = create_driver(1)
 driver = drivers_list_3[0]
@@ -59,7 +59,9 @@ def test_get_driver(mock_get_drivers_from_db, key, value, result):
     return_value=DICT_TIME,
 )
 @patch("src.controller.Drivers.build_report", return_value=drivers_list_5)
-def test_get_drivers_from_files(mock_build_report, mock_format_file_time, mock_format_file_abbr, mock_open_files, mock_find_files):
+def test_get_drivers_from_files(
+    mock_build_report, mock_format_file_time, mock_format_file_abbr, mock_open_files, mock_find_files
+        ):
     assert get_drivers_from_files() == list_drivers_files
     mock_find_files.assert_called_with(Config.FOLDER_FILES)
     mock_open_files.assert_called_with("path_2")
@@ -85,7 +87,5 @@ def test_sort_data(mock_get_drivers_from_db, order, result):
     mock_get_drivers_from_db.assert_called_once()
 
 
-@patch("src.models.DataBaseDrivers.select", return_value=drivers_list_3)
-def test_get_drivers_from_db(mock_DataBaseDrivers):
-    assert get_drivers_from_db() == drivers_list_3
-    mock_DataBaseDrivers.assert_called_once()
+def test_get_drivers_from_db():
+    assert get_drivers_from_db() == drivers_list_6
