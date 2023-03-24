@@ -3,8 +3,7 @@ from peewee import SqliteDatabase
 
 from config import TestConfig
 from main import app as flask_app
-from src.controller import create_driver
-from src.models import DataBaseDrivers
+from src import DataBaseDrivers, create_driver
 
 drivers_list_6 = create_driver(2)
 

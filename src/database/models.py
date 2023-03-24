@@ -1,7 +1,7 @@
 
 from peewee import CharField, Model
 
-from src.db_connect import db
+from .db_connect import db
 
 
 class BaseModel(Model):
@@ -18,3 +18,6 @@ class DataBaseDrivers(BaseModel):
     start_time = CharField()
     end_time = CharField()
     speed = CharField()
+
+
+MODELS: list[Model] = [DataBaseDrivers]

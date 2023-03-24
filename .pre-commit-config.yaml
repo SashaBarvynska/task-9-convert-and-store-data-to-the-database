@@ -11,11 +11,11 @@ repos:
         entry: flake8 src/ tests/
         language: python
         files: \.py$
-        exclude: ^swagger/
+        exclude: ^swagger/,__init__.py
     -   id: isort
         name: Sorting import statements
         entry: isort
         language: python
         args: ["--filter-files"]
         files: \.py$
-        exclude: ^swagger/
+        exclude: ^swagger/,__init__.py

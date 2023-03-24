@@ -5,7 +5,7 @@ import pytest
 from flask import Response
 from simplexml import dumps
 
-from src.controller import create_driver
+from src import create_driver
 from tests.test_helpers import json_format, sort_list, xml_format
 
 drivers_list_1 = create_driver(2)

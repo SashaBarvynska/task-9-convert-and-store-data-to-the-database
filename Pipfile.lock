@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "533d9af72253541776a6bfb76520567bda91ef9cc43a713fe3f03c14d38949bb"
+            "sha256": "861b08861106bee1c6b811fa8337f73674605598f452c233ce4bd0a9c03f4624"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -49,6 +49,22 @@
             ],
             "markers": "platform_system == 'Windows'",
             "version": "==0.4.6"
+        },
+        "faker": {
+            "hashes": [
+                "sha256:4c98c42984db54be2246d40e6407cd983db7b1511a70eaff64c3f383a51bace6",
+                "sha256:9bd71833146b844d848791b79720c7806108130c9603c7074123b3f77b4e97a1"
+            ],
+            "markers": "python_version >= '3.7'",
+            "version": "==18.3.1"
+        },
+        "faker-vehicle": {
+            "hashes": [
+                "sha256:30fa5eb81da17d6483be545431a9b51f76f2b6731ac3ee9c2e038560fca58e4a",
+                "sha256:3a7f1065da54b998f8875785282d3b1da4a422bc14fe0776a4a4ff4c1872a3b5"
+            ],
+            "index": "pypi",
+            "version": "==0.2.0"
         },
         "flasgger": {
             "hashes": [

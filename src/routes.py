@@ -3,9 +3,8 @@ from http import HTTPStatus
 from flasgger import swag_from
 from flask import request, wrappers
 
-from src.app import app
-from src.controller import DriverAdaptor, make_json_response, make_xml_response
-from src.serializers import data_to_json, data_to_xml
+from src import (DriverAdaptor, app, data_to_json, data_to_xml,
+                 make_json_response, make_xml_response)
 
 
 @app.route('/report', methods=['GET'])
