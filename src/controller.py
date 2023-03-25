@@ -5,11 +5,11 @@ from flask import make_response, wrappers
 from simplexml import dumps
 from task_Barvynska import Driver, Drivers
 
-from src.database.models import MODELS
+from src.database.models import DataBaseDrivers
 
 
 def get_drivers_from_db() -> list[Driver]:
-    query = MODELS[0].select()
+    query = DataBaseDrivers.select()
     list_drivers = []
     for i in query:
         list_drivers.append(Driver(i.abbreviation, i.driver, i.car, i.start_time, i.end_time, i.speed))
@@ -25,7 +25,7 @@ class DriverAdaptor:
 
     def get_driver(self, key: str, value) -> Driver or None:
         driver_list = [driver for driver in self.list_drivers if getattr(driver, key).lower() == value.lower()]
-        if not len(driver_list):
+        if not driver_list:
             return None
         return driver_list[0]
 

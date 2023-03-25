@@ -1,4 +1,5 @@
 import random
+import string
 
 from faker import Faker
 from faker_vehicle import VehicleProvider
@@ -11,7 +12,7 @@ fake.add_provider(VehicleProvider)
 def create_driver(number_of_drivers: int) -> list[Driver]:
     drivers_list = []
     for _ in range(number_of_drivers):
-        abbreviation = fake.bothify("???", "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        abbreviation = fake.bothify("???", string.ascii_uppercase)
         driver = fake.name()
         car = fake.vehicle_make()
         start_time = random.choice(["12:02:58.917", "12:00:00.000"])

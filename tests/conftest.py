@@ -3,9 +3,7 @@ from peewee import SqliteDatabase
 
 from config import TestConfig
 from main import app as flask_app
-from src import DataBaseDrivers, create_driver
-
-drivers_list_6 = create_driver(2)
+from src import DataBaseDrivers
 
 
 @pytest.fixture(scope="module")
@@ -25,5 +23,6 @@ def test_db():
     test_db.bind([DataBaseDrivers], bind_refs=False, bind_backrefs=False)
     test_db.connect()
     test_db.create_tables([DataBaseDrivers])
-    DataBaseDrivers.insert_many([x.__dict__ for x in drivers_list_6]).execute()
     yield test_db
+    test_db.drop_tables([DataBaseDrivers])
+    test_db.close()

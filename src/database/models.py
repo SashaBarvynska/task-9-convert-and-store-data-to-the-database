@@ -1,7 +1,7 @@
 
 from peewee import CharField, Model
 
-from .db_connect import db
+from .connect import db
 
 
 class BaseModel(Model):

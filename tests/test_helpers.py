@@ -3,6 +3,11 @@ import json
 from simplexml import dumps
 from task_Barvynska import Driver
 
+from src.database.fixtures import create_driver
+
+one_driver_in_list = create_driver(1)
+many_drivers_in_list = create_driver(3)
+
 
 def sort_list(drivers_list: list[Driver], order: bool) -> list[Driver]:
     return sorted(drivers_list, key=lambda x: x.speed, reverse=order)
