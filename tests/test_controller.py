@@ -2,12 +2,12 @@ from unittest.mock import patch
 
 import pytest
 
-from src import DriverAdaptor, get_drivers_from_db
+from src import DriverAdaptor
 from src.database.models import DataBaseDrivers
 from tests.test_helpers import many_drivers_in_list, one_driver_in_list
 
 
-@patch("src.controller.get_drivers_from_db", return_value=one_driver_in_list)
+@patch("src.controller.DriverAdaptor.get_drivers_from_db", return_value=one_driver_in_list)
 @pytest.mark.parametrize("key,value,result", [
     (
         "abbreviation",
@@ -31,7 +31,7 @@ def test_get_driver(mock_get_drivers_from_db, key, value, result):
     assert instance.get_driver(key, value) == result
 
 
-@patch("src.controller.get_drivers_from_db", return_value=many_drivers_in_list)
+@patch("src.controller.DriverAdaptor.get_drivers_from_db", return_value=many_drivers_in_list)
 @pytest.mark.parametrize("order,result", [
     (
         True,
@@ -50,4 +50,4 @@ def test_sort_data(mock_get_drivers_from_db, order, result):
 
 def test_get_drivers_from_db():
     DataBaseDrivers.insert_many([x.__dict__ for x in many_drivers_in_list]).execute()
-    assert get_drivers_from_db() == many_drivers_in_list
+    assert DriverAdaptor().get_drivers_from_db() == many_drivers_in_list

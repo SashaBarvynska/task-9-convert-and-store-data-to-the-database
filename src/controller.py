@@ -8,17 +8,16 @@ from task_Barvynska import Driver, Drivers
 from src.database.models import DataBaseDrivers
 
 
-def get_drivers_from_db() -> list[Driver]:
-    query = DataBaseDrivers.select()
-    list_drivers = []
-    for i in query:
-        list_drivers.append(Driver(i.abbreviation, i.driver, i.car, i.start_time, i.end_time, i.speed))
-    return list_drivers
-
-
 class DriverAdaptor:
     def __init__(self):
-        self.list_drivers = get_drivers_from_db()
+        self.list_drivers = self.get_drivers_from_db()
+
+    def get_drivers_from_db(self) -> list[Driver]:
+        query = DataBaseDrivers.select()
+        list_drivers = []
+        for i in query:
+            list_drivers.append(Driver(i.abbreviation, i.driver, i.car, i.start_time, i.end_time, i.speed))
+        return list_drivers
 
     def sort_data(self, order: bool) -> list[Driver]:
         return Drivers.sort_data(self.list_drivers, order)

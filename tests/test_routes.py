@@ -12,7 +12,7 @@ sorted_list_drivers_asc = sort_list(many_drivers_in_list, True)
 sorted_list_drivers_desc = sort_list(many_drivers_in_list, False)
 
 
-@patch("src.controller.get_drivers_from_db", return_value=many_drivers_in_list)
+@patch("src.controller.DriverAdaptor.get_drivers_from_db", return_value=many_drivers_in_list)
 @pytest.mark.parametrize("order, format, result", [
     (
         "desc", "json", json_format(sorted_list_drivers_asc)
@@ -33,7 +33,7 @@ def test_show_report(mock_get_drivers_from_db, order, format, result, client):
     assert result == response.data
 
 
-@patch("src.controller.get_drivers_from_db", return_value=many_drivers_in_list)
+@patch("src.controller.DriverAdaptor.get_drivers_from_db", return_value=many_drivers_in_list)
 @pytest.mark.parametrize("order, format, result", [
     (
         "desc", "json", json_format(sorted_list_drivers_asc, 2)
@@ -54,7 +54,7 @@ def test_show_drivers(mock_get_drivers, order, format, result, client):
     assert response.data == result
 
 
-@patch("src.controller.get_drivers_from_db", return_value=one_driver_in_list)
+@patch("src.controller.DriverAdaptor.get_drivers_from_db", return_value=one_driver_in_list)
 @pytest.mark.parametrize("format, result", [
     (
         "json", f'{json.dumps(one_driver_in_list[0].__dict__)}'.encode()
@@ -69,7 +69,7 @@ def test_get_info(mock_get_drivers, format, result, client):
     assert response.data == result
 
 
-@patch("src.controller.get_drivers_from_db", return_value=one_driver_in_list)
+@patch("src.controller.DriverAdaptor.get_drivers_from_db", return_value=one_driver_in_list)
 @patch("src.routes.DriverAdaptor.get_driver", return_value=None)
 def test_get_info_error(mock_get_driver, mock_get_drivers, client):
     response: Response = client.get("/report/drivers/DRghfgR?format=json")
