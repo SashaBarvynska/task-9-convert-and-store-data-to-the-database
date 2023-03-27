@@ -1,0 +1,24 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+[[source]]
+url = "https://test.pypi.org/simple/"
+verify_ssl = true
+name = "testpypi-40"
+
+[packages]
+flask = "==2.2.2"
+isort = "==5.11.4"
+jinja2 = "==3.1.2"
+pandas = "==1.5.2"
+flasgger = "==0.9.5"
+flask-restful = "==0.3.9"
+python-simplexml = "==0.1.5"
+task-barvynska = {version = "==0.0.33", index = "testpypi-40"}
+peewee = "==3.16.0"
+faker-vehicle = "*"
+
+[dev-packages]
+pytest = {version="*"}
